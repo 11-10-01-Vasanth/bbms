@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,14 +21,14 @@ public class BloodRequest {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "requester_id", nullable = false)
-	private User requester; // The recipient making the request
+	private User requester;
 
 	@Enumerated(EnumType.STRING)
 	private BloodGroup requiredBloodGroup;
 
-	private int requestedUnits; // How many units required
+	private int requestedUnits;
 
 	private String city;
 	private String hospitalName;
@@ -40,30 +41,30 @@ public class BloodRequest {
 	@Enumerated(EnumType.STRING)
 	private RequestStatus status = RequestStatus.PENDING;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "blood_bank_id")
-	private BloodBank bloodBank; // Link to Blood Inventory if available
+	private BloodBank bloodBank;
 
 	public BloodRequest() {
 		super();
 	}
 
-	public BloodRequest(Long id, User requester, BloodGroup requiredBloodGroup, int requestedUnits, String city,
-			String hospitalName, String hospitalAddress, LocalDate requiredDate, String contactNumber, String emailId,
-			BloodBank bloodBank) {
-		super();
-		this.id = id;
-		this.requester = requester;
-		this.requiredBloodGroup = requiredBloodGroup;
-		this.requestedUnits = requestedUnits;
-		this.city = city;
-		this.hospitalName = hospitalName;
-		this.hospitalAddress = hospitalAddress;
-		this.requiredDate = requiredDate;
-		this.contactNumber = contactNumber;
-		this.emailId = emailId;
-		this.status = RequestStatus.PENDING;
-	}
+//	public BloodRequest(Long id, User requester, BloodGroup requiredBloodGroup, int requestedUnits, String city,
+//			String hospitalName, String hospitalAddress, LocalDate requiredDate, String contactNumber, String emailId,
+//			BloodBank bloodBank) {
+//		super();
+//		this.id = id;
+//		this.requester = requester;
+//		this.requiredBloodGroup = requiredBloodGroup;
+//		this.requestedUnits = requestedUnits;
+//		this.city = city;
+//		this.hospitalName = hospitalName;
+//		this.hospitalAddress = hospitalAddress;
+//		this.requiredDate = requiredDate;
+//		this.contactNumber = contactNumber;
+//		this.emailId = emailId;
+//		this.status = RequestStatus.PENDING;
+//	}
 
 	public Long getId() {
 		return id;

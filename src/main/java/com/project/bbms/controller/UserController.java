@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.bbms.exceptions.UserNotException;
 import com.project.bbms.model.User;
 import com.project.bbms.service.UserService;
 
@@ -30,10 +31,10 @@ public class UserController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<User> getUser(@PathVariable Long id) {
+	public ResponseEntity<Object> getUser(@PathVariable Long id) {
 		User user = userService.getUser(id);
 		if (user == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
 		}
 		return ResponseEntity.ok(user);
 	}
